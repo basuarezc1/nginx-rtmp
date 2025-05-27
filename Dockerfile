@@ -32,5 +32,18 @@ RUN apt-get purge -y build-essential git && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
+#Se copia el archivo de configuración de Nginx
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf
+
+#Se expone el puerto 1935 para RTMP y 80 para HTTP
+EXPOSE 1935 80
+
+#Comando por defecto al iniciar el contenedor
+CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
+
+
+
+
+
 
 
