@@ -1,0 +1,6 @@
+# Ignora todo por defecto
+**
+
+# …excepto los dos ficheros que realmente necesita el build
+!Dockerfile
+!nginx.conf
