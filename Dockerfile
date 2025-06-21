@@ -38,6 +38,11 @@ COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 #Se expone el puerto 1935 para RTMP y 8080 para HTTP
 EXPOSE 1935 8080
 
+#Se crea el directorio de logs
+RUN mkdir -p /var/log/nginx && \
+    chown -R nobody:nogroup /var/log/nginx  && \
+    chmod 755 /var/log/nginx        
+
 #Comando por defecto al iniciar el contenedor
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
 
