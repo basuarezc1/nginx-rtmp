@@ -30,7 +30,9 @@ RUN ./configure --with-http_ssl_module \
 #Se limpia para hacer más ligera la imagen 
 RUN apt-get purge -y build-essential git && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/* /tmp/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/nginx-* && \
+    rm -rf /tmp/nginx-rtmp-module
 
 #Se copia el archivo de configuración de Nginx
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
@@ -40,8 +42,10 @@ EXPOSE 1935 8080
 
 #Se crea el directorio de logs
 RUN mkdir -p /var/log/nginx && \
-    chown -R nobody:nogroup /var/log/nginx  && \
-    chmod 755 /var/log/nginx        
+    chown -R nobody:nogroup /var/log/nginx && \
+    chmod 755 /var/log/nginx && \
+    mkdir -p /tmp/hls /tmp/dash /tmp/hls720p /tmp/hls480p && \
+    chmod -R 777 /tmp/hls /tmp/dash /tmp/hls720p /tmp/hls480p     
 
 #Comando por defecto al iniciar el contenedor
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
